@@ -1,0 +1,4 @@
+﻿Release 0.2
+* issue #1: Current project is no longer part of suggestions.
+* issue #2: Projects already referenced by an other InternalsVisibleTo-Attribute are no longer part of suggestions.
+* issue #3: Top 10 suggested references get sorted by their Levenstein distance to the token given.
