@@ -10,7 +10,6 @@
 
 namespace InternalsVisibleToFixer {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace InternalsVisibleToFixer {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InternalsVisibleToFixer.Resources", typeof(Resources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InternalsVisibleToFixer.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,7 +61,7 @@ namespace InternalsVisibleToFixer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type names should be all uppercase..
+        ///   Looks up a localized string similar to The reference neither match any project in current solution nor any known external reference.
         /// </summary>
         internal static string AnalyzerDescription {
             get {
@@ -80,7 +79,7 @@ namespace InternalsVisibleToFixer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type name contains lowercase letters.
+        ///   Looks up a localized string similar to InternalsVisibleTo should point to valid project id..
         /// </summary>
         internal static string AnalyzerTitle {
             get {

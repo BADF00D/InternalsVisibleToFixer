@@ -8,4 +8,4 @@ nuget FluentAssertions 4.16.0 framework: >= net452
 nuget JetBrains.dotMemoryUnit 2.3.20160517.113140 framework: >= net452
 
 nuget NUnit 2.6.4 framework: >= net452
-nuget NUnit.Runners 2.6.4 framework: >= net452B
+nuget NUnit.Runners 2.6.4 framework: >= net452

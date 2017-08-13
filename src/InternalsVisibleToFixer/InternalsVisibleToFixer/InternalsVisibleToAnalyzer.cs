@@ -9,8 +9,8 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace InternalsVisibleToFixer {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class InternalsVisibleToFixerAnalyzer : DiagnosticAnalyzer {
-        public const string DiagnosticId = "InternalsVisibleToFixer";
+    public class InternalsVisibleToAnalyzer : DiagnosticAnalyzer {
+        public const string UnknownReferenceId = "InternalsVisibleToFixer_UnknownProjectReference";
 
         // You can change these strings in the Resources.resx file. If you do not want your analyzer to be localize-able, you can use regular strings for Title and MessageFormat.
         // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization
@@ -23,9 +23,10 @@ namespace InternalsVisibleToFixer {
 
         private static readonly List<string> AllowedFriendAssemblies = new List<string> { "DynamicProxyGenAssembly2" };
 
-        private static readonly DiagnosticDescriptor UnknownReferenceRule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
+        private static readonly DiagnosticDescriptor UnknownReferenceRule = new DiagnosticDescriptor(UnknownReferenceId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(UnknownReferenceRule);
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(UnknownReferenceRule);
 
         public override void Initialize(AnalysisContext context) {
             context.RegisterSyntaxNodeAction(AnalyzeSyntaxNode, SyntaxKind.Attribute);
@@ -43,7 +44,7 @@ namespace InternalsVisibleToFixer {
             var argument = attribute.DescendantNodes().OfType<AttributeArgumentSyntax>().FirstOrDefault();
             var s = argument.Expression as LiteralExpressionSyntax;
             if (s == null) return;
-            var token = s.Token.ValueText;
+            var referencedProject = s.Token.ValueText;
 
             var solution = context.GetSolution();
 
@@ -52,10 +53,10 @@ namespace InternalsVisibleToFixer {
                 .Concat(projectNames)
                 .ToArray();
 
-            if (allowedFriendAssemblies.Contains(token)) return;
+            if (allowedFriendAssemblies.Contains(referencedProject)) return;
 
             var properties = ImmutableDictionary<string, string>.Empty
-                .Add(Constants.CurrentInternalsVisibleToTokenContent, token)
+                .Add(Constants.CurrentInternalsVisibleToTokenContent, referencedProject)
                 .Add(Constants.ProjectsOfSolution, string.Join(Constants.ValueSeperator, projectNames))
                 .Add(Constants.AdditionalNonSolutionReferences, string.Join(Constants.ValueSeperator, AllowedFriendAssemblies));
             context.ReportDiagnostic(Diagnostic.Create(UnknownReferenceRule, attribute.GetLocation(), properties));

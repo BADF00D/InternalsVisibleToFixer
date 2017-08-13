@@ -65,11 +65,11 @@ namespace InternalsVisibleToFixer.Test {
         }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider() {
-            return new InternalsVisibleToFixerCodeFixProvider();
+            return new InternalsVisibleToCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() {
-            return new InternalsVisibleToFixerAnalyzer();
+            return new InternalsVisibleToAnalyzer();
         }
     }
 }
