@@ -18,7 +18,7 @@ namespace InternalsVisibleToFixer {
         private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.AnalyzerDescription), Resources.ResourceManager, typeof(Resources));
         private const string Category = "Wrong usage";
-        private const string InternalsVisibleTo = "InternalsVisibleTo";
+        
 
 
         private static readonly List<string> AllowedFriendAssemblies = new List<string> { "DynamicProxyGenAssembly2" };
@@ -34,18 +34,11 @@ namespace InternalsVisibleToFixer {
 
         private static void AnalyzeSyntaxNode(SyntaxNodeAnalysisContext context) {
             var attribute = context.Node as AttributeSyntax;
+
+            if (!attribute.IsInternalsVisibleToAttribute()) return;
+
+            var referencedProject = attribute.GetReferencedProjectOrDefault();
             
-            var identifier = attribute?
-                .DescendantNodes()
-                .OfType<IdentifierNameSyntax>()
-                .FirstOrDefault(ins => ins.Identifier.Text == InternalsVisibleTo);
-            if (identifier == null) return;
-
-            var argument = attribute.DescendantNodes().OfType<AttributeArgumentSyntax>().FirstOrDefault();
-            var s = argument.Expression as LiteralExpressionSyntax;
-            if (s == null) return;
-            var referencedProject = s.Token.ValueText;
-
             var solution = context.GetSolution();
 
             var projectNames = solution.Projects.Select(p => p.AssemblyName);

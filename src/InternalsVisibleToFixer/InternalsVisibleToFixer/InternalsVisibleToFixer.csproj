@@ -32,6 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Extensions\AttributeSyntaxExtensions.cs" />
+    <Compile Include="Extensions\SyntaxNodeExtensions.cs" />
     <Compile Include="InternalsVisibleToCodeFixProvider.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="InternalsVisibleToAnalyzer.cs" />

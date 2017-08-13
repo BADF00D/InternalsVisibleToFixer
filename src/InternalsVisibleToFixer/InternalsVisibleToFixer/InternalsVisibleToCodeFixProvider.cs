@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using InternalsVisibleToFixer.Extensions;
 
 namespace InternalsVisibleToFixer
 {
@@ -32,18 +33,40 @@ namespace InternalsVisibleToFixer
             // TODO: Replace the following code with your own analysis, generating a CodeAction for each fix to suggest
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
-
-            // Find the type declaration identified by the diagnostic.
+            
             var attribute =
                 root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<AttributeSyntax>().First();
             var properties = context.Diagnostics.First().Properties;
             var currentToken = properties[Constants.CurrentInternalsVisibleToTokenContent];
-            var projectsOfSolution = properties[Constants.ProjectsOfSolution]
-                .Split(new[] {Constants.ValueSeperator}, StringSplitOptions.RemoveEmptyEntries);
+            var refrencesAlreadyMade = root
+                .DescendantNodes()
+                .OfType<AttributeSyntax>()
+                .Where(@as => @as.IsInternalsVisibleToAttribute())
+                .Select(@as => @as.GetReferencedProjectOrDefault())
+                .Where(reference => reference != null)
+                .Except(new[] { currentToken })
+                .ToArray();
+
+            var projectsOfSolution = context.Document.Project.Solution
+                .Projects
+                .Select(p => p.Name)
+                .ToArray();
+            var currentProject = new[] {context.Document.Project.Name};
             var additionalAllowedReferences = properties[Constants.AdditionalNonSolutionReferences]
                 .Split(new[] {Constants.ValueSeperator}, StringSplitOptions.RemoveEmptyEntries);
-            
-            foreach (var project in projectsOfSolution.Except(new [] {context.Document.Project.Name}))
+
+
+            var suggestedReferences = projectsOfSolution
+                .Except(refrencesAlreadyMade)
+                .Except(currentProject);
+            foreach (var project in suggestedReferences)
+            {
+                var title = string.Format(TitleFormat, currentToken, project);
+                context.RegisterCodeFix(
+                    CodeAction.Create(title, c => ReplaceReference(attribute, project, context), title), diagnostic);
+            }
+
+            foreach (var project in additionalAllowedReferences)
             {
                 var title = string.Format(TitleFormat, currentToken, project);
                 context.RegisterCodeFix(
