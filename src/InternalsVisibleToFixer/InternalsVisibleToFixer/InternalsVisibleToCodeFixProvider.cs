@@ -42,8 +42,8 @@ namespace InternalsVisibleToFixer
                 .Split(new[] {Constants.ValueSeperator}, StringSplitOptions.RemoveEmptyEntries);
             var additionalAllowedReferences = properties[Constants.AdditionalNonSolutionReferences]
                 .Split(new[] {Constants.ValueSeperator}, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var project in projectsOfSolution)
+            
+            foreach (var project in projectsOfSolution.Except(new [] {context.Document.Project.Name}))
             {
                 var title = string.Format(TitleFormat, currentToken, project);
                 context.RegisterCodeFix(
