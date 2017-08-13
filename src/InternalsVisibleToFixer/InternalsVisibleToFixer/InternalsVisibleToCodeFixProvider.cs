@@ -61,7 +61,8 @@ namespace InternalsVisibleToFixer
             var suggestedReferences = projectsOfSolution
                 .Except(refrencesAlreadyMade)
                 .Except(currentProject)
-                .OrderBy(project => _distanceCalculator.CalculateDistance(currentToken, project));
+                .OrderBy(project => _distanceCalculator.CalculateDistance(currentToken, project))
+                .Take(10);
             foreach (var project in suggestedReferences)
             {
                 var title = string.Format(TitleFormat, currentToken, project);
