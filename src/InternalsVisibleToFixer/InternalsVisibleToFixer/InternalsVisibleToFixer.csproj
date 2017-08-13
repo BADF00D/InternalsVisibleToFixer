@@ -32,6 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DistanceCalculation\IStringDistanceCalculator.cs" />
+    <Compile Include="DistanceCalculation\LevensteinDistance.cs" />
     <Compile Include="Extensions\AttributeSyntaxExtensions.cs" />
     <Compile Include="Extensions\SyntaxNodeExtensions.cs" />
     <Compile Include="InternalsVisibleToCodeFixProvider.cs" />
@@ -49,6 +51,7 @@
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

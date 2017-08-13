@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
+using InternalsVisibleToFixer.DistanceCalculation;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -16,6 +17,7 @@ namespace InternalsVisibleToFixer
     public class InternalsVisibleToCodeFixProvider : CodeFixProvider
     {
         private const string TitleFormat = "Replace {0} with {1}";
+        private static IStringDistanceCalculator _distanceCalculator = new LevensteinDistanceCalculator();
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(InternalsVisibleToAnalyzer.UnknownReferenceId);
@@ -58,7 +60,8 @@ namespace InternalsVisibleToFixer
 
             var suggestedReferences = projectsOfSolution
                 .Except(refrencesAlreadyMade)
-                .Except(currentProject);
+                .Except(currentProject)
+                .OrderBy(project => _distanceCalculator.CalculateDistance(currentToken, project));
             foreach (var project in suggestedReferences)
             {
                 var title = string.Format(TitleFormat, currentToken, project);
