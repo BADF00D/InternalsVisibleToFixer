@@ -33,15 +33,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Configuration\DefaultConfiguration.cs" />
     <Compile Include="DistanceCalculation\IStringDistanceCalculator.cs" />
     <Compile Include="DistanceCalculation\LevensteinDistance.cs" />
     <Compile Include="Extensions\AttributeSyntaxExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\SyntaxNodeExtensions.cs" />
+    <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="InternalsVisibleToCodeFixProvider.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="InternalsVisibleToAnalyzer.cs" />
     <Compile Include="Extensions\RoslynExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProposalGeneration\IProposalGenerator.cs" />
+    <Compile Include="ProposalGeneration\ProposalGenerator.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

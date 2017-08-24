@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using InternalsVisibleToFixer.Configuration;
 using InternalsVisibleToFixer.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -21,8 +22,6 @@ namespace InternalsVisibleToFixer {
         
 
 
-        private static readonly List<string> AllowedFriendAssemblies = new List<string> { "DynamicProxyGenAssembly2" };
-
         private static readonly DiagnosticDescriptor UnknownReferenceRule = new DiagnosticDescriptor(UnknownReferenceId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
@@ -42,7 +41,7 @@ namespace InternalsVisibleToFixer {
             var solution = context.GetSolution();
 
             var projectNames = solution.Projects.Select(p => p.AssemblyName);
-            var allowedFriendAssemblies = AllowedFriendAssemblies
+            var allowedFriendAssemblies = ConfigurationManager.Instance.ExternalReferences
                 .Concat(projectNames)
                 .ToArray();
 
@@ -50,8 +49,9 @@ namespace InternalsVisibleToFixer {
 
             var properties = ImmutableDictionary<string, string>.Empty
                 .Add(Constants.CurrentInternalsVisibleToTokenContent, referencedProject)
-                .Add(Constants.ProjectsOfSolution, string.Join(Constants.ValueSeperator, projectNames))
-                .Add(Constants.AdditionalNonSolutionReferences, string.Join(Constants.ValueSeperator, AllowedFriendAssemblies));
+                //.Add(Constants.ProjectsOfSolution, string.Join(Constants.ValueSeperator, projectNames))
+                //.Add(Constants.AdditionalNonSolutionReferences, string.Join(Constants.ValueSeperator, AllowedFriendAssemblies))
+                ;
             context.ReportDiagnostic(Diagnostic.Create(UnknownReferenceRule, attribute.GetLocation(), properties));
         }
     }
