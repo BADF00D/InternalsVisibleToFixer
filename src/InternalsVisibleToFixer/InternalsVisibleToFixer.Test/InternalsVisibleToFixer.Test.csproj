@@ -49,6 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DistanceCalculations\LevensteinDistanceCalculatorSpecs\LevensteinDistanceCalculatorTests.cs" />
+    <Compile Include="Issue\If_Analyser_runs_on_code_from_issue_6.cs" />
+    <Compile Include="Issue\IssueSpec.cs" />
+    <Compile Include="MyHelper.cs" />
     <Compile Include="ProposalGeneration\ProposalGeneratorSpecs\ProposalGeneratorSpec.cs" />
     <Compile Include="Spec.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />

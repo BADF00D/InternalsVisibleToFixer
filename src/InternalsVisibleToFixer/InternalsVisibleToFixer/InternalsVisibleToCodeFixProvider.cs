@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,7 +47,7 @@ namespace InternalsVisibleToFixer
                 .ToArray();
 
             var proposalGenerator = new ProposalGenerator(DistanceCalculator, ConfigurationManager.Instance);
-            var suggestedReferences = proposalGenerator.Generate(currentToken, context.Document.Project.Name,
+            var suggestedReferences = proposalGenerator.Generate(currentToken ?? string.Empty, context.Document.Project.Name,
                 refrencesAlreadyMade, projectsOfSolution);
             foreach (var project in suggestedReferences)
             {
