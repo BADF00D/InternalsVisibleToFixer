@@ -3,7 +3,7 @@ source https://www.nuget.org/api/v2/
 nuget Microsoft.CodeAnalysis.CSharp.Workspaces 1.0.1
 nuget System.Collections.Immutable 1.1.37 
 
-nuget FakeItEasy 2.3.1 framework: >= net452
+nuget FakeItEasy 4.0.0 framework: >= net452
 nuget FluentAssertions 4.16.0 framework: >= net452
 nuget JetBrains.dotMemoryUnit 2.3.20160517.113140 framework: >= net452
 
