@@ -35,10 +35,12 @@
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\DefaultConfiguration.cs" />
+    <Compile Include="DistanceCalculation\CamelCaseLevensteinDistanceCalculator.cs" />
     <Compile Include="DistanceCalculation\IStringDistanceCalculator.cs" />
     <Compile Include="DistanceCalculation\LevensteinDistance.cs" />
     <Compile Include="Extensions\AttributeSyntaxExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\SyntaxNodeExtensions.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="InternalsVisibleToCodeFixProvider.cs" />
