@@ -2,7 +2,7 @@
 
 namespace InternalsVisibleToFixer.DistanceCalculation
 {
-    public class LevensteinDistanceCalculator : IStringDistanceCalculator
+    internal class LevensteinDistanceCalculator : IStringDistanceCalculator
     {
         public int CalculateDistance(string first, string second)
         {

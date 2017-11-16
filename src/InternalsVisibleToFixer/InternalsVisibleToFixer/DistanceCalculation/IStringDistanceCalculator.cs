@@ -1,6 +1,6 @@
 ﻿namespace InternalsVisibleToFixer.DistanceCalculation
 {
-    public interface IStringDistanceCalculator
+    internal interface IStringDistanceCalculator
     {
         int CalculateDistance(string first, string second);
     }

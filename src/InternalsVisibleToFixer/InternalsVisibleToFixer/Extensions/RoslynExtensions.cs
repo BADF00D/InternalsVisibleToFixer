@@ -10,9 +10,17 @@ namespace InternalsVisibleToFixer.Extensions
     {
         public static Solution GetSolution(this SyntaxNodeAnalysisContext context)
         {
-            var workspaceobj = context.Options.GetPrivatePropertyValue<object>("Workspace");
+            try {
+                var workspaceobj = context.Options.GetPrivatePropertyValue<object>("Workspace");
 
-            return workspaceobj.GetPrivatePropertyValue<Solution>("CurrentSolution");
+                return workspaceobj.GetPrivatePropertyValue<Solution>("CurrentSolution");
+            } catch {
+
+                var tyy = context.Options.GetType().GetField("_solution",BindingFlags.NonPublic | BindingFlags.Instance);
+                var solution = tyy.GetValue(context.Options) as Solution;
+                return solution;
+            }
+
         }
 
         private static T GetPrivatePropertyValue<T>(this object obj, string propName) {
