@@ -1,4 +1,6 @@
-﻿Release 0.3
+﻿Release 0.4
+* issue #7: Order of proposal should be more intuitive. Further more you can search by typing upper case letters.
+Release 0.3
 * issue #6: Fixed crash.
 * no issue: Some refactorings an new tests.
 Release 0.2
