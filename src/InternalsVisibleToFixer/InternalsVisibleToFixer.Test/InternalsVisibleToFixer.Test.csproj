@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DistanceCalculations\CamelCaseLevensteinDistanceCalculatorSpecs\CamelCaseLevensteinDistanceCalculatorTEsts.cs" />
     <Compile Include="DistanceCalculations\LevensteinDistanceCalculatorSpecs\LevensteinDistanceCalculatorTests.cs" />
     <Compile Include="Extensions\StringExtensionsSpecs\StringExtensionsSpec.cs" />
     <Compile Include="Issue\If_Analyser_runs_on_code_from_issue_6.cs" />
