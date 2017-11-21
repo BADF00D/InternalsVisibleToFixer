@@ -18,7 +18,7 @@ namespace InternalsVisibleToFixer
     public class InternalsVisibleToCodeFixProvider : CodeFixProvider
     {
         private const string TitleFormat = "Replace {0} with {1}";
-        private static readonly IStringDistanceCalculator DistanceCalculator = new LevensteinDistanceCalculator();
+        private static readonly IStringDistanceCalculator DistanceCalculator = new CamelCaseLevensteinDistanceCalculator();
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(InternalsVisibleToAnalyzer.UnknownReferenceId);
